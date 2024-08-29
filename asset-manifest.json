@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/trains-arduino/static/css/main.bdd63f27.css",
+    "main.js": "/trains-arduino/static/js/main.45fce2b8.js",
+    "static/js/453.f7333325.chunk.js": "/trains-arduino/static/js/453.f7333325.chunk.js",
+    "static/media/train-blue.jpg": "/trains-arduino/static/media/train-blue.dd466ca28eb3540a2b4b.jpg",
+    "static/media/train-green.jpg": "/trains-arduino/static/media/train-green.3213510a676ccfe47313.jpg",
+    "index.html": "/trains-arduino/index.html",
+    "main.bdd63f27.css.map": "/trains-arduino/static/css/main.bdd63f27.css.map",
+    "main.45fce2b8.js.map": "/trains-arduino/static/js/main.45fce2b8.js.map",
+    "453.f7333325.chunk.js.map": "/trains-arduino/static/js/453.f7333325.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bdd63f27.css",
+    "static/js/main.45fce2b8.js"
+  ]
+}
