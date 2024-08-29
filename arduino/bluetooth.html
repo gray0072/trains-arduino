@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Bluetooth</title>
+</head>
+<body>
+    <p id="status1">Status: Not connected</p>
+    <button id="connect">Connect to ESP32</button>
+    <button id="sendOn">Send ON</button>
+    <button id="sendOff">Send OFF</button>
+	
+	
+    <p id="status">Status: Idle</p>
+    <p id="command">Last command: None</p>
+    <button id="startButton">Start Listening</button>
+    <button id="stopButton" disabled>Stop Listening</button>
+
+    <script>
+        let device;
+        let characteristic;
+
+        document.getElementById('connect').addEventListener('click', async () => {
+            try {
+                device = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: 'ESP32-C3 Supermini' }],
+                    optionalServices: ['12345678-1234-1234-1234-1234567890ab']
+                });
+
+                const server = await device.gatt.connect();
+                const service = await server.getPrimaryService('12345678-1234-1234-1234-1234567890ab');
+                characteristic = await service.getCharacteristic('87654321-4321-4321-4321-9876543210ab');
+
+                // Подключение к обновлениям характеристик
+                characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+                await characteristic.startNotifications();
+
+                document.getElementById("status1").textContent = "Status: Connected";
+                console.log('Connected to ESP32');
+            } catch (error) {
+			    document.getElementById("status1").textContent = "Status: Error connecting to device";
+                console.error('Error:', error);
+            }
+        });
+
+		function handleCharacteristicValueChanged(event) {
+			// Получение данных из события
+			const value = new TextDecoder().decode(event.target.value);
+			console.log('Received Value: ', value);
+		}
+		
+		window.sendCommand = async (command) => {
+            if (characteristic) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(command);
+                await characteristic.writeValue(data);
+                console.log('Data sent to ESP32 ' + command);
+            } else {
+                console.error('Characteristic not found');
+            }
+		}
+
+        document.getElementById('sendOn').addEventListener('click', async () => {
+		  window.sendCommand('LED_ON')
+        });
+        document.getElementById('sendOff').addEventListener('click', async () => {
+		  window.sendCommand('LED_OFF')
+        });
+		
+		
+		
+window.onload = () => {
+    // Проверка поддержки Web Speech API
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Web Speech API is not supported in this browser.");
+        return;
+    }
+
+    // Создание экземпляра распознавания речи
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true; // Непрерывное распознавание
+    recognition.interimResults = false; // Только окончательные результаты
+    recognition.lang = 'ru-RU'; // Язык распознавания
+    //recognition.lang = 'en-US'; // Язык распознавания
+
+    // Ссылки на элементы DOM
+    const statusElement = document.getElementById("status");
+    const commandElement = document.getElementById("command");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+
+    // Обработка события начала распознавания
+    recognition.onstart = () => {
+        statusElement.textContent = "Status: Listening...";
+        startButton.disabled = true;
+        stopButton.disabled = false;
+    };
+
+    // Обработка события завершения распознавания
+    recognition.onend = () => {
+        statusElement.textContent = "Status: Idle";
+        startButton.disabled = false;
+        stopButton.disabled = true;
+    };
+
+    // Обработка распознанного текста
+    recognition.onresult = (event) => {
+        const lastResultIndex = event.results.length - 1;
+        const command = event.results[lastResultIndex][0].transcript.trim();
+        commandElement.textContent = `Last command: ${command}`;
+        handleCommand(command);
+    };
+
+    // Обработка ошибок распознавания
+    recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        statusElement.textContent = "Status: Error";
+    };
+
+    // Функция для обработки команд
+    function handleCommand(command) {
+        switch (command.toLowerCase()) {
+            case "включи":
+		        window.sendCommand('LED_ON')
+                console.log("Turning on the light...");
+                // Добавьте сюда логику для включения света
+                break;
+            case "выключи":
+		        window.sendCommand('LED_OFF')
+                console.log("Turning off the light...");
+                // Добавьте сюда логику для выключения света
+                break;
+            case "play music":
+                console.log("Playing music...");
+                // Добавьте сюда логику для воспроизведения музыки
+                break;
+            default:
+                console.log("Unknown command:", command);
+        }
+    }
+
+    // Кнопка для старта прослушивания
+    startButton.onclick = () => {
+        recognition.start();
+    };
+
+    // Кнопка для остановки прослушивания
+    stopButton.onclick = () => {
+        recognition.stop();
+    };
+};
+    </script>
+</body>
+</html>

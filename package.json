@@ -1,7 +1,7 @@
 {
-  "name": "train-arduino",
+  "name": "trains-arduino",
   "version": "0.1.0",
-  "homepage": "https://gray0072.github.io/train-arduino",
+  "homepage": "https://gray0072.github.io/trains-arduino",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,12 +11,14 @@
     "@types/node": "^16.18.89",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/web-bluetooth": "^0.0.20",
     "bootstrap": "^5.3.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.1",
     "react-scripts": "5.0.1",
+    "rxjs": "^7.8.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

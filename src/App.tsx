@@ -1,5 +1,5 @@
 import React from 'react';
-import TrainsView from './TrainsView';
+import TrainsView from './trains/TrainsView';
 
 export default function App() {
   return (
