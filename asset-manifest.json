@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/trains-arduino/static/css/main.0e47aa68.css",
-    "main.js": "/trains-arduino/static/js/main.10abd4fd.js",
+    "main.js": "/trains-arduino/static/js/main.510eb9aa.js",
     "static/js/453.f7333325.chunk.js": "/trains-arduino/static/js/453.f7333325.chunk.js",
     "static/media/bootstrap-icons.woff?": "/trains-arduino/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
     "static/media/bootstrap-icons.woff2?": "/trains-arduino/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
@@ -9,11 +9,11 @@
     "static/media/train-blue.jpg": "/trains-arduino/static/media/train-blue.0c857f558d52a057c94c.jpg",
     "index.html": "/trains-arduino/index.html",
     "main.0e47aa68.css.map": "/trains-arduino/static/css/main.0e47aa68.css.map",
-    "main.10abd4fd.js.map": "/trains-arduino/static/js/main.10abd4fd.js.map",
+    "main.510eb9aa.js.map": "/trains-arduino/static/js/main.510eb9aa.js.map",
     "453.f7333325.chunk.js.map": "/trains-arduino/static/js/453.f7333325.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0e47aa68.css",
-    "static/js/main.10abd4fd.js"
+    "static/js/main.510eb9aa.js"
   ]
 }
