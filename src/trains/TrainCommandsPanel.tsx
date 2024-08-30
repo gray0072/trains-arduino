@@ -29,21 +29,24 @@ export function TrainCommandsPanel(props: {
 
     return (
         <div>
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="d-flex gap-3 mb-4 justify-content-center justify-content-sm-start">
                 <Button size="lg"
                     onClick={() => handleBeepClick()}>
+                    <i className="bi bi-volume-up"> </i>
                     Beep
                 </Button>
                 <Button
                     size="lg"
                     variant={isLightOn ? "light" : "dark"}
                     onClick={() => handleLightClick()}>
+                    <i className="bi bi-lightbulb"> </i>
                     Light
                 </Button>
                 <Button
                     size="lg"
                     variant="danger"
                     onClick={() => handleSpeedChange(0)}>
+                    <i className="bi bi-sign-stop"> </i>
                     Stop
                 </Button>
             </div>

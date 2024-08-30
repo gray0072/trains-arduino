@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Col, Image, Row } from 'react-bootstrap';
+import { Card, CardBody, Col, Image, Row } from 'react-bootstrap';
 import { useEffect, useMemo, useState } from 'react';
 import { Train, TrainStatus } from './Train';
 import { TrainCommandsPanel } from './TrainCommandsPanel';
@@ -10,18 +10,24 @@ export function TrainCard(props: {
     train: Train
 }) {
     const { train } = props;
-    const trainStore = useMemo(() => new TrainStore(train), [])
+    const trainStore = useMemo(() => new TrainStore(train), [train])
     const status = useObservable(trainStore.status$)
+    const speed = useObservable(trainStore.speed$)
 
     return (
-        <Card>
+        <Card style={{ minHeight: "50vh" }}>
+            {/*
             <CardHeader>{train.name}</CardHeader>
+            */}
             <CardBody>
                 <Row>
-                    <Col sm={3}>
-                        <Image src={train.imageSrc} fluid />
+                    <Col xs={8} sm={3} className="offset-2 offset-sm-0">
+                        <Image
+                            src={train.imageSrc}
+                            fluid
+                            style={speed < 0 ? { transform: "scaleX(-1)" } : {}} />
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={9} className="mt-3 mt-md-0">
                         {
                             status === TrainStatus.Connected
                                 ? <TrainCommandsPanel
@@ -33,7 +39,7 @@ export function TrainCard(props: {
                     </Col>
                 </Row>
             </CardBody>
-        </Card>
+        </Card >
     )
 }
 

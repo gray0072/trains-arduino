@@ -8,16 +8,17 @@ export class TrainStore implements ITrandCommands {
     }
 
     status$ = new BehaviorSubject<TrainStatus>(TrainStatus.NotConnected)
+    speed$ = new BehaviorSubject<number>(0)
     private device: BluetoothDevice | null = null
     private characteristic: BluetoothRemoteGATTCharacteristic | null = null
 
     connect = async () => {
         try {
             this.status$.next(TrainStatus.Connecting)
-            this.device = await navigator.bluetooth.requestDevice({
-                filters: [{ name: this.train.bluetoothDeviceName }],
-                optionalServices: [this.train.bluetoothServiceId]
-            });
+                this.device = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: this.train.bluetoothDeviceName }],
+                    optionalServices: [this.train.bluetoothServiceId]
+                });
 
             const server = await this.device.gatt!.connect();
             this.device.ongattserverdisconnected = () => {
@@ -69,6 +70,7 @@ export class TrainStore implements ITrandCommands {
     }
 
     public sendSpeed = async (speed: number) => {
+        this.speed$.next(speed)
         await this.sendCommand("SPEED_" + speed)
     }
 }

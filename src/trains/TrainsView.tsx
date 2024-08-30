@@ -5,7 +5,7 @@ import { TrainCard } from './TrainCard';
 export default function TrainsView() {
 
     return (
-        <div className="container">
+        <div>
             {
                 knownTrains.map(train =>
                     <TrainCard
