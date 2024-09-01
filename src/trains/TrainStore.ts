@@ -1,8 +1,8 @@
 import { BehaviorSubject } from "rxjs";
 import { Train, TrainStatus } from "./Train";
-import { ITrandCommands } from "./ITrandCommands";
+import { ITrainCommands } from "./ITrainCommands";
 
-export class TrainStore implements ITrandCommands {
+export class TrainStore implements ITrainCommands {
 
     constructor(private train: Train) {
     }

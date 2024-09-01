@@ -5,6 +5,7 @@ export type Train = {
     bluetoothDeviceName: string;
     bluetoothServiceId: string;
     bluetoothCharacteristicId: string;
+    voiceCommands: { [key: string]: string };
 }
 
 export enum TrainStatus {

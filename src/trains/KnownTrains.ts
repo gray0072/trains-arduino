@@ -9,6 +9,10 @@ export const knownTrains: Train[] = [
         bluetoothDeviceName: "TrainGreen",
         bluetoothServiceId: "12345678-1234-1234-1234-123456789001",
         bluetoothCharacteristicId: "87654321-4321-4321-4321-9876543210ab",
+        voiceCommands: {
+            "en-US": "green",
+            "ru-RU": "зелёный",
+        },
     },
     {
         name: "Blue train",
@@ -16,5 +20,9 @@ export const knownTrains: Train[] = [
         bluetoothDeviceName: "TrainBlue",
         bluetoothServiceId: "12345678-1234-1234-1234-123456789002",
         bluetoothCharacteristicId: "87654321-4321-4321-4321-9876543210ab",
+        voiceCommands: {
+            "en-US": "blue",
+            "ru-RU": "синий",
+        },
     },
 ]

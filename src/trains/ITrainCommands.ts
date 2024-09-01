@@ -1,5 +1,5 @@
 
-export interface ITrandCommands {
+export interface ITrainCommands {
     sendBeep: () => Promise<void>;
     sendLightOn: () => Promise<void>;
     sendLightOff: () => Promise<void>;

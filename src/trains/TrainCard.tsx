@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Train, TrainStatus } from './Train';
 import { TrainCommandsPanel } from './TrainCommandsPanel';
 import { TrainStore } from './TrainStore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TrainConnectPanel } from './TrainConnectPanel';
 
 export function TrainCard(props: {
@@ -31,6 +31,7 @@ export function TrainCard(props: {
                         {
                             status === TrainStatus.Connected
                                 ? <TrainCommandsPanel
+                                    train={train}
                                     commands={trainStore} />
                                 : <TrainConnectPanel
                                     status={status}
@@ -43,7 +44,7 @@ export function TrainCard(props: {
     )
 }
 
-function useObservable<T>(subject: BehaviorSubject<T>): T {
+export function useObservable<T>(subject: BehaviorSubject<T>): T {
 
     const [value, setValue] = useState<T>(subject.value);
 
@@ -54,4 +55,14 @@ function useObservable<T>(subject: BehaviorSubject<T>): T {
     }, [subject])
 
     return value
+}
+
+export function useObservableAction<T>(subject: Observable<T> | null | undefined, action: (value: T) => void): void {
+    useEffect(() => {
+        if (subject) {
+            const sub = subject.subscribe(action)
+
+            return () => sub.unsubscribe()
+        }
+    }, [subject, action])
 }

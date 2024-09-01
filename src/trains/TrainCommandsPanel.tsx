@@ -1,14 +1,43 @@
 import { Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
-import { ITrandCommands } from './ITrandCommands';
+import { useContext, useState } from 'react';
+import { ITrainCommands } from './ITrainCommands';
+import { SpeechCommandsContext } from './TrainsView';
+import { useObservableAction } from './TrainCard';
+import { Train } from './Train';
 
 export function TrainCommandsPanel(props: {
-    commands: ITrandCommands
+    train: Train
+    commands: ITrainCommands
 }) {
-    const { commands } = props;
+    const { train, commands } = props;
 
     const [speed, setSpeed] = useState<number>(0);
     const [isLightOn, setIsLightOn] = useState<boolean>(false);
+
+    const speechCommands = useContext(SpeechCommandsContext)
+    useObservableAction(speechCommands?.recognizedBeep$, async (trainName: string) => {
+        if (trainName === train.name) {
+            await commands.sendBeep()
+        }
+    })
+    useObservableAction(speechCommands?.recognizedLightOn$, async (trainName: string) => {
+        if (trainName === train.name) {
+            setIsLightOn(true)
+            await commands.sendLightOn()
+        }
+    })
+    useObservableAction(speechCommands?.recognizedLightOff$, async (trainName: string) => {
+        if (trainName === train.name) {
+            setIsLightOn(false)
+            await commands.sendLightOff()
+        }
+    })
+    useObservableAction(speechCommands?.recognizedSpeed$, async ({ trainName, speed }) => {
+        if (trainName === train.name) {
+            setSpeed(speed);
+            await commands.sendSpeed(speed)
+        }
+    })
 
     const handleBeepClick = async () => {
         await commands.sendBeep()
