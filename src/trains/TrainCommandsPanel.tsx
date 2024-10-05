@@ -1,59 +1,61 @@
-import { Button, Form } from 'react-bootstrap';
-import { useContext, useState } from 'react';
-import { ITrainCommands } from './ITrainCommands';
+import { Button } from 'react-bootstrap';
+import { useContext } from 'react';
 import { SpeechCommandsContext } from './TrainsView';
 import { useObservableAction } from './TrainCard';
 import { Train } from './Train';
+import { TrainCommandsContext } from '../App';
 
 export function TrainCommandsPanel(props: {
     train: Train
-    commands: ITrainCommands
 }) {
-    const { train, commands } = props;
-
-    const [speed, setSpeed] = useState<number>(0);
-    const [isLightOn, setIsLightOn] = useState<boolean>(false);
+    const { train } = props;
 
     const speechCommands = useContext(SpeechCommandsContext)
-    useObservableAction(speechCommands?.recognizedBeep$, async (trainName: string) => {
-        if (trainName === train.name) {
-            await commands.sendBeep()
+    const trainCommands = useContext(TrainCommandsContext)
+    useObservableAction(speechCommands?.recognizedBeep$, async (trainId: number) => {
+        if (trainId === train.id) {
+            await trainCommands?.sendBeep(trainId)
         }
     })
-    useObservableAction(speechCommands?.recognizedLightOn$, async (trainName: string) => {
-        if (trainName === train.name) {
-            setIsLightOn(true)
-            await commands.sendLightOn()
+    useObservableAction(speechCommands?.recognizedStop$, async (trainId: number) => {
+        if (trainId === train.id) {
+            await trainCommands?.sendStop(trainId)
         }
     })
-    useObservableAction(speechCommands?.recognizedLightOff$, async (trainName: string) => {
-        if (trainName === train.name) {
-            setIsLightOn(false)
-            await commands.sendLightOff()
+    useObservableAction(speechCommands?.recognizedSpeedUp$, async (trainId: number) => {
+        if (trainId === train.id) {
+            await trainCommands?.sendSpeedUp(trainId)
         }
     })
-    useObservableAction(speechCommands?.recognizedSpeed$, async ({ trainName, speed }) => {
-        if (trainName === train.name) {
-            setSpeed(speed);
-            await commands.sendSpeed(speed)
+    useObservableAction(speechCommands?.recognizedSpeedDown$, async (trainId: number) => {
+        if (trainId === train.id) {
+            await trainCommands?.sendSpeedDown(trainId)
+        }
+    })
+    useObservableAction(speechCommands?.recognizedLightToggle$, async (trainId: number) => {
+        if (trainId === train.id) {
+            await trainCommands?.sendLightToggle(trainId)
         }
     })
 
     const handleBeepClick = async () => {
-        await commands.sendBeep()
+        await trainCommands?.sendBeep(train.id)
     };
 
-    const handleLightClick = async () => {
-        const newIsLightOn = !isLightOn
-        setIsLightOn(newIsLightOn)
-        newIsLightOn
-            ? await commands.sendLightOn()
-            : await commands.sendLightOff()
+    const handleStopClick = async () => {
+        await trainCommands?.sendStop(train.id)
     };
 
-    const handleSpeedChange = async (speed: number) => {
-        setSpeed(speed);
-        await commands.sendSpeed(speed)
+    const handleSpeedUpClick = async () => {
+        await trainCommands?.sendSpeedUp(train.id)
+    };
+
+    const handleSpeedDownClick = async () => {
+        await trainCommands?.sendSpeedDown(train.id)
+    };
+
+    const handleLightToggleClick = async () => {
+        await trainCommands?.sendLightToggle(train.id)
     };
 
     return (
@@ -66,26 +68,37 @@ export function TrainCommandsPanel(props: {
                 </Button>
                 <Button
                     size="lg"
-                    variant={isLightOn ? "light" : "dark"}
-                    onClick={() => handleLightClick()}>
+                    variant={"light"}
+                    onClick={() => handleLightToggleClick()}>
                     <i className="bi bi-lightbulb"> </i>
                     Light
                 </Button>
+            </div>
+            <div className="d-flex gap-3 mb-4 justify-content-center justify-content-sm-start">
+                <Button
+                    size="lg"
+                    variant="success"
+                    onClick={() => handleSpeedUpClick()}>
+                    <i className="bi bi-arrow-up"> </i>
+                    Speed up
+                </Button>
+                <Button
+                    size="lg"
+                    variant="warning"
+                    onClick={() => handleSpeedDownClick()}>
+                    <i className="bi bi-arrow-down"> </i>
+                    Speed down
+                </Button>
+            </div>
+            <div className="d-flex gap-3 mb-4 justify-content-center justify-content-sm-start">
                 <Button
                     size="lg"
                     variant="danger"
-                    onClick={() => handleSpeedChange(0)}>
+                    onClick={() => handleStopClick()}>
                     <i className="bi bi-sign-stop"> </i>
                     Stop
                 </Button>
             </div>
-            <Form.Label>Speed: {speed}</Form.Label>
-            <Form.Range
-                min={-100}
-                max={100}
-                step={5}
-                value={speed}
-                onChange={x => handleSpeedChange(Number(x.target.value))} />
         </div>
     );
 }

@@ -1,7 +1,8 @@
 
 export interface ITrainCommands {
-    sendBeep: () => Promise<void>;
-    sendLightOn: () => Promise<void>;
-    sendLightOff: () => Promise<void>;
-    sendSpeed: (speed: number) => Promise<void>;
+    sendBeep: (trainId: number) => Promise<void>;
+    sendStop: (trainId: number) => Promise<void>;
+    sendSpeedUp: (trainId: number) => Promise<void>;
+    sendSpeedDown: (trainId: number) => Promise<void>;
+    sendLightToggle: (trainId: number) => Promise<void>;
 }

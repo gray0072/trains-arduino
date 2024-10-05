@@ -9,10 +9,11 @@ declare global {
 }
 
 export interface ISpeechCommands {
-    recognizedBeep$: Subject<string>
-    recognizedLightOn$: Subject<string>
-    recognizedLightOff$: Subject<string>
-    recognizedSpeed$: Subject<{ trainName: string, speed: number }>
+    recognizedBeep$: Subject<number>
+    recognizedStop$: Subject<number>
+    recognizedSpeedUp$: Subject<number>
+    recognizedSpeedDown$: Subject<number>
+    recognizedLightToggle$: Subject<number>
 }
 
 export class SpeechCommands implements ISpeechCommands {
@@ -23,10 +24,11 @@ export class SpeechCommands implements ISpeechCommands {
     ) {
     }
 
-    recognizedBeep$ = new Subject<string>()
-    recognizedLightOn$ = new Subject<string>()
-    recognizedLightOff$ = new Subject<string>()
-    recognizedSpeed$ = new Subject<{ trainName: string, speed: number }>()
+    recognizedBeep$ = new Subject<number>()
+    recognizedStop$ = new Subject<number>()
+    recognizedSpeedUp$ = new Subject<number>()
+    recognizedSpeedDown$ = new Subject<number>()
+    recognizedLightToggle$ = new Subject<number>()
     recognizedCommand$ = new BehaviorSubject<string>("---")
 
     private recognition: any | null = null
@@ -77,73 +79,39 @@ export class SpeechCommands implements ISpeechCommands {
                 case `${trainName} бип`:
                 case `${trainName} биби`:
                     console.log("BEEP");
-                    this.recognizedBeep$.next(train.name);
-                    break;
-                case `${trainName} свет`:
-                case `${trainName} огни`:
-                case `${trainName} фары`:
-                    console.log("LIGHT_ON");
-                    this.recognizedLightOn$.next(train.name);
-                    break;
-                case `${trainName} туши`:
-                case `${trainName} потухни`:
-                case `${trainName} гаси`:
-                    console.log("LIGHT_OFF");
-                    this.recognizedLightOff$.next(train.name);
-                    break;
-                case `${trainName} вперёд`:
-                    console.log("SPEED_50");
-                    this.recognizedSpeed$.next({
-                        trainName: train.name,
-                        speed: 50,
-                    });
-                    break;
-                case `${trainName} полный вперед`:
-                    console.log("SPEED_100");
-                    this.recognizedSpeed$.next({
-                        trainName: train.name,
-                        speed: 100,
-                    });
-                    break;
-                case `${trainName} назад`:
-                    console.log("SPEED_-50");
-                    this.recognizedSpeed$.next({
-                        trainName: train.name,
-                        speed: -50,
-                    });
-                    break;
-                case `${trainName} полный назад`:
-                    console.log("SPEED_-100");
-                    this.recognizedSpeed$.next({
-                        trainName: train.name,
-                        speed: -100,
-                    });
+                    this.recognizedBeep$.next(train.id);
                     break;
                 case `${trainName} стоп`:
                 case `${trainName} стой`:
                 case `${trainName} тормози`:
                 case `${trainName} остановка`:
                 case `${trainName} остановись`:
-                    console.log("SPEED_0");
-                    this.recognizedSpeed$.next({
-                        trainName: train.name,
-                        speed: 0,
-                    });
+                    console.log("STOP");
+                    this.recognizedStop$.next(train.id);
+                    break;
+                case `${trainName} вперёд`:
+                case `${trainName} быстрее`:
+                case `${trainName} быстрей`:
+                    console.log("SPEED_UP");
+                    this.recognizedSpeedUp$.next(train.id);
+                    break;
+                case `${trainName} назад`:
+                case `${trainName} медленнее`:
+                case `${trainName} медленней`:
+                    console.log("SPEED_DOWN");
+                    this.recognizedSpeedDown$.next(train.id);
+                    break;
+                case `${trainName} свет`:
+                case `${trainName} огни`:
+                case `${trainName} фары`:
+                case `${trainName} туши`:
+                case `${trainName} потухни`:
+                case `${trainName} гаси`:
+                    console.log("LIGHT_TOGGLE");
+                    this.recognizedLightToggle$.next(train.id);
                     break;
                 default:
-                    if (command.startsWith(`${trainName} скорость`)) {
-                        const parts = command.split(" ")
-                        const speedStr = parts[parts.length - 1]
-                        const speed = Number(speedStr) * 10
-                        console.log("SPEED_" + speed);
-                        this.recognizedSpeed$.next({
-                            trainName: train.name,
-                            speed: speed,
-                        });
-                    }
-                    else {
-                        return false
-                    }
+                    return false
             }
 
             return true
