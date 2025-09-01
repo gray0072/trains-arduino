@@ -32,10 +32,11 @@ export class BluetoothStore implements ITrainCommands {
             }
             const service = await server.getPrimaryService(bluetoothServiceId);
             this.characteristic = await service.getCharacteristic(bluetoothCharacteristicId);
-
+            /*
+            // Produces error "GATT not supported"
             this.characteristic.addEventListener('characteristicvaluechanged', this.handleCharacteristicValueChanged);
             await this.characteristic.startNotifications();
-
+            */
             this.status$.next(BluetoothStatus.Connected)
         } catch (error) {
             this.status$.next(BluetoothStatus.Error)
