@@ -39,8 +39,8 @@ Adafruit_VL53L0X distanceSensor = Adafruit_VL53L0X();
 #define motorLevelMax 15
 #define motorSpeedMin255 140 // 140 is tested, starts easy even with a trailer
 #define motorSpeedMax255 230
-#define rangeStopMm 250     // Train will stop if smth is closer than this range
-#define rangeMaxSpeedMm 350 // Train will start slow down if smth is closer than this range
+#define rangeStopMm 100     // Train will stop if smth is closer than this range
+#define rangeMaxSpeedMm 150 // Train will start slow down if smth is closer than this range
 
 int8_t motorLevel = 0;
 int16_t motor1Speed = 0;
