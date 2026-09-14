@@ -185,7 +185,7 @@ void initWifiEspNow()
     // WiFi.setTxPower(WIFI_POWER_8_5dBm);
     if (esp_now_init() != ESP_OK)
     {
-        errorInfiniteBlink("Ошибка инициализации ESP-NOW");
+        errorInfiniteBlink("ESP-NOW init error");
     }
     esp_now_peer_info_t peerInfo = {};
     peerInfo.channel = 0;
@@ -195,7 +195,7 @@ void initWifiEspNow()
     {
         if (esp_now_add_peer(&peerInfo) != ESP_OK)
         {
-            errorInfiniteBlink("Ошибка добавления peer");
+            errorInfiniteBlink("Peer add error");
         }
     }
 }
