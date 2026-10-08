@@ -34,11 +34,11 @@ jobs:
           cache: npm
           cache-dependency-path: remote-web/package-lock.json
       - run: npm ci
-      # Actions sets CI=true, so react-scripts fails the build on any lint warning.
+      # Type-checks with tsc, then bundles with Vite into remote-web/dist.
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: remote-web/build
+          path: remote-web/dist
 
   deploy:
     needs: build
