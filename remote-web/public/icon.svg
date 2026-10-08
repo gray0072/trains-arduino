@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#FFD84D"/>
+  <g transform="translate(256 256) scale(1.12) translate(-256 -251)">
+  <!-- rail -->
+  <rect x="40" y="352" width="432" height="10" rx="3" fill="#8A8D88"/>
+  <!-- studs on the long hood and the cab roof -->
+  <rect x="126" y="191" width="24" height="11" rx="2" fill="#0055BF" stroke="#003C8A" stroke-width="3"/><rect x="166" y="191" width="24" height="11" rx="2" fill="#0055BF" stroke="#003C8A" stroke-width="3"/><rect x="206" y="191" width="24" height="11" rx="2" fill="#0055BF" stroke="#003C8A" stroke-width="3"/><rect x="246" y="191" width="24" height="11" rx="2" fill="#0055BF" stroke="#003C8A" stroke-width="3"/><rect x="286" y="191" width="24" height="11" rx="2" fill="#0055BF" stroke="#003C8A" stroke-width="3"/>
+  <rect x="314" y="133" width="24" height="11" rx="2" fill="#1B2A34" stroke="#000" stroke-width="3"/><rect x="348" y="133" width="24" height="11" rx="2" fill="#1B2A34" stroke="#000" stroke-width="3"/><rect x="382" y="133" width="24" height="11" rx="2" fill="#1B2A34" stroke="#000" stroke-width="3"/>
+  <!-- long hood -->
+  <rect x="116" y="200" width="200" height="100" fill="#0055BF" stroke="#003C8A" stroke-width="5"/>
+  <line x1="116" y1="250" x2="316" y2="250" stroke="#003C8A" stroke-width="3" opacity=".5"/>
+  <!-- cab -->
+  <rect x="312" y="152" width="96" height="148" fill="#0055BF" stroke="#003C8A" stroke-width="5"/>
+  <rect x="306" y="140" width="108" height="16" rx="2" fill="#1B2A34"/>
+  <rect x="332" y="172" width="56" height="44" rx="4" fill="#9FE2E8" stroke="#003C8A" stroke-width="4"/>
+  <!-- yellow stripes -->
+  <rect x="116" y="212" width="196" height="14" fill="#FFCD03"/>
+  <rect x="300" y="200" width="14" height="100" fill="#FFCD03"/>
+  <rect x="330" y="240" width="78" height="12" fill="#FFCD03"/>
+  <!-- the arrows-and-circle train logo -->
+  <g fill="none" stroke="#FFCD03" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="160" y1="266" x2="194" y2="266"/><line x1="240" y1="266" x2="274" y2="266"/>
+    <polyline points="172,254 160,266 172,278"/><polyline points="262,254 274,266 262,278"/>
+    <circle cx="217" cy="266" r="18"/>
+  </g>
+  <circle cx="217" cy="266" r="6" fill="#FFCD03"/>
+  <!-- chassis and wheels -->
+  <rect x="106" y="298" width="312" height="22" rx="4" fill="#1B2A34"/>
+  <circle cx="152" cy="332" r="22" fill="#1B2A34"/><circle cx="152" cy="332" r="8" fill="#8A8D88"/><circle cx="202" cy="332" r="22" fill="#1B2A34"/><circle cx="202" cy="332" r="8" fill="#8A8D88"/><circle cx="322" cy="332" r="22" fill="#1B2A34"/><circle cx="322" cy="332" r="8" fill="#8A8D88"/><circle cx="372" cy="332" r="22" fill="#1B2A34"/><circle cx="372" cy="332" r="8" fill="#8A8D88"/>
+</g>
+</svg>
